@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -8,15 +9,19 @@ import { UserService } from '../../services/user.service';
 })
 
 export class UserListComponent implements OnInit {
+
   users: any = [];
   p: number = 1;
   itemsPerPage = 10;
   totalPages!: number;
   pages!: number[];
+  displayedUsers: any = []; 
 
-  displayedUsers: any = []; // This will hold the users for the current page.
-
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private _router: Router,
+    protected _activatedRoute: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.userService.getUser().subscribe(data => {
@@ -31,7 +36,7 @@ export class UserListComponent implements OnInit {
 
   changePage(page: number) {
     if (page < 1 || page > this.totalPages) {
-      return; // prevent turning pages out of bounds
+      return; 
     }
     this.p = page;
     this.updateDisplayedUsers();
@@ -43,12 +48,28 @@ export class UserListComponent implements OnInit {
     this.displayedUsers = this.users.slice(start, end);
   }
 
-  editUser(id: number) {
-    console.log('Editing user:', id);
-  }
+  // editUser(id: number) {
+  //   console.log('Editing user:', id);
+  // }
 
   deleteUser(id: number) {
     console.log('Deleting user:', id);
+  }
+
+  goToForm(id: number) {
+    if (id) {
+      this._router.navigate(["/user-form", id]);
+    } else {
+      this._router.navigate(["/user-form", "0"]);
+    }
+  }
+
+  editUser(id: number) {
+    this.goToForm(id);
+  }
+
+  addUser() {
+    this.goToForm(0);
   }
 
 }

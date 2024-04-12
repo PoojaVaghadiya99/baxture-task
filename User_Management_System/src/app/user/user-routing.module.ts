@@ -10,7 +10,8 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'user-list', component: UserListComponent },
-      { path: 'user', component: UserUpsertComponent }
+      { path: 'user-form', component: UserUpsertComponent },
+      { path: 'user-form/:id', component: UserUpsertComponent }
     ]
   },
 
