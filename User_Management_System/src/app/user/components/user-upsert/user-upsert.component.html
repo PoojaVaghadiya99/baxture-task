@@ -2,6 +2,13 @@
 
 <div class="container my-5">
     <div class="card shadow border-0 bg-white">
+
+        <div class="card-header bg-white border-0">
+            <h4>{{formTitle}}
+                <a routerLink="/user-list" class="btn btn-danger float-end">X</a>
+            </h4>
+        </div>
+
         <div class="card-body">
             <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="row g-3">
 
@@ -69,7 +76,8 @@
 
                 <!-- Submit Button -->
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary me-3">Submit</button>
+                    <button type="button" value="Cancle" class="btn btn-primary" routerLink="/user-list">Cancle</button>
                 </div>
             </form>
         </div>

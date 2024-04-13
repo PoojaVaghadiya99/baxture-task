@@ -16,6 +16,7 @@ export class UserUpsertComponent implements OnInit {
   isEdit: boolean = false;
   currentUserId?: string;
   submitted: boolean = false;
+  formTitle: string = "";
 
   constructor(
     private fb: FormBuilder,
@@ -31,8 +32,10 @@ export class UserUpsertComponent implements OnInit {
       if (userId) {
         if (Number(userId) == 0) {
           this.isEdit = false
+          this.formTitle = "Add User"
         } else {
           this.isEdit = true;
+          this.formTitle = "Edit User"
           this.currentUserId = userId;
           this.userService.getUserById(Number(userId)).subscribe(user => {
             this.editForm(user);
@@ -67,15 +70,44 @@ export class UserUpsertComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     if (this.userForm.valid) {
-      if (this.isEdit) {
-        this.userService.updateUser(this.userForm.value as UserDTO).subscribe(() => {
-          this.router.navigate(['/user-list']);
+      if (!this.isEdit) {
+        this.userService.getUser().subscribe(users => {
+          const existingUser = users.find(user => user.email === this.userForm.value.email);
+          if (existingUser) {
+            const editResponse = window.confirm('This email is already in use. Do you want to edit the existing user instead ?');
+            if (editResponse) {
+              this.isEdit = true;
+              this.currentUserId = existingUser.id;
+              this.formTitle = "Edit User";
+              this.editForm(existingUser);
+            }
+          } else {
+            const addResponse = window.confirm('Do you want to add this new user ?');
+            if (addResponse) {
+              this.processFormSubmission();
+            }
+          }
         });
       } else {
-        this.userService.addUser(this.userForm.value as UserDTO).subscribe(() => {
-          this.router.navigate(['/user-list']);
-        });
+        const updateResponse = window.confirm('Are you sure you want to update this user ?');
+        if (updateResponse) {
+          this.processFormSubmission();
+        }
       }
+    }
+  }
+
+  private processFormSubmission(): void {
+    if (this.isEdit) {
+      this.userService.updateUser(this.userForm.value as UserDTO).subscribe(() => {
+        this.router.navigate(['/user-list']);
+        alert('User updated successfully!');
+      });
+    } else {
+      this.userService.addUser(this.userForm.value as UserDTO).subscribe(() => {
+        this.router.navigate(['/user-list']);
+        alert('User added successfully!');
+      });
     }
   }
 }
