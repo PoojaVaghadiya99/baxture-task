@@ -1,45 +1,46 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserDTO } from '../../model/user.model'
+import { UserDTO } from '../../model/user.model';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  styleUrls: ['./user-list.component.css'],
 })
-
 export class UserListComponent implements OnInit {
-
   users: UserDTO[] = [];
   p: number = 1;
   itemsPerPage = 10;
   totalPages!: number;
   pages!: number[];
   displayedUsers: UserDTO[] = [];
+  isLoading: boolean = false;
 
   constructor(
     private userService: UserService,
     private _router: Router,
-    protected _activatedRoute: ActivatedRoute,
-  ) { }
+    protected _activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.getUsers()
+    this.getUsers();
   }
 
   getUsers() {
-    this.userService.getUser()
-      .subscribe({
-        next: (result: UserDTO[]) => {
-          this.users = result;
-          this.totalPages = Math.ceil(this.users.length / this.itemsPerPage);
-          this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-        },
-        error: (err: any) => {
-          console.error('There was an error!', err);
-        },
-      });
+    this.isLoading = true;
+    this.userService.getUser().subscribe({
+      next: (result: UserDTO[]) => {
+        this.users = result;
+        this.totalPages = Math.ceil(this.users.length / this.itemsPerPage);
+        this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+        this.isLoading = false;
+      },
+      error: (err: any) => {
+        console.error('There was an error!', err);
+        this.isLoading = false;
+      },
+    });
   }
 
   changePage(page: number) {
@@ -47,7 +48,7 @@ export class UserListComponent implements OnInit {
       return;
     }
     this.p = page;
-    this.getUsers()
+    this.getUsers();
   }
 
   deleteUser(id: string) {
@@ -62,28 +63,27 @@ export class UserListComponent implements OnInit {
           this.userService.deleteUser(Number(id)).subscribe({
             next: (result) => {
               console.log('User deleted:', result);
-              this.users = this.users.filter(u => u.id !== user.id);
+              this.users = this.users.filter((u) => u.id !== user.id);
               this.getUsers();
-              this.p = 1;  
+              this.p = 1;
             },
             error: (err) => {
               console.error('Failed to delete user', err);
-            }
+            },
           });
         }
       },
       error: (err) => {
         console.error('Failed to fetch user', err);
-      }
+      },
     });
   }
-  
 
   goToForm(id: number) {
     if (id) {
-      this._router.navigate(["/user-form", id]);
+      this._router.navigate(['/user-form', id]);
     } else {
-      this._router.navigate(["/user-form", "0"]);
+      this._router.navigate(['/user-form', '0']);
     }
   }
 
@@ -94,5 +94,4 @@ export class UserListComponent implements OnInit {
   addUser() {
     this.goToForm(0);
   }
-
 }
