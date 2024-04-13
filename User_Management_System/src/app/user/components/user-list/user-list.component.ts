@@ -59,7 +59,7 @@ export class UserListComponent implements OnInit {
       next: (user: UserDTO) => {
         const confirmDelete = confirm(
           `Are you sure you want to delete below user ?\n
-          First Name - ${user.first_name} ${user.last_name}
+          Name - ${user.first_name} ${user.last_name}
           Email - ${user.email}`
         );
         if (confirmDelete) {

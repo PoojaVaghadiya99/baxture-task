@@ -48,7 +48,7 @@
                         <h6>Address</h6>
                     </label>
                     <input type="text" class="form-control" id="address" formControlName="address"
-                        placeholder="First Name">
+                        placeholder="Address">
                     <div *ngIf="userForm.get('address')?.invalid && (userForm.get('address')?.touched || submitted)"
                         class="text-danger">
                         <div *ngIf="userForm.get('address')?.errors?.['required']">Address is required.</div>
@@ -81,7 +81,7 @@
 
                 <div class="col-12 my-5">
                     <button type="submit" class="btn btn-primary me-3">Submit</button>
-                    <button type="button" value="Cancle" class="btn btn-primary" routerLink="/user-list">Cancle</button>
+                    <button type="button" value="Cancel" class="btn btn-primary" routerLink="/user-list">Cancel</button>
                 </div>
             </form>
         </div>
