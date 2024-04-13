@@ -25,13 +25,16 @@ export class UserListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getUsers()
+  }
+
+  getUsers() {
     this.userService.getUser()
       .subscribe({
         next: (result: UserDTO[]) => {
           this.users = result;
           this.totalPages = Math.ceil(this.users.length / this.itemsPerPage);
           this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-          this.updateDisplayedUsers();
         },
         error: (err: any) => {
           console.error('There was an error!', err);
@@ -44,13 +47,7 @@ export class UserListComponent implements OnInit {
       return;
     }
     this.p = page;
-    this.updateDisplayedUsers();
-  }
-
-  updateDisplayedUsers() {
-    const start = (this.p - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    this.displayedUsers = this.users.slice(start, end);
+    this.getUsers()
   }
 
   deleteUser(id: string) {
@@ -64,17 +61,23 @@ export class UserListComponent implements OnInit {
         if (confirmDelete) {
           this.userService.deleteUser(Number(id)).subscribe({
             next: (result) => {
-              console.log(result);
+              console.log('User deleted:', result);
               this.users = this.users.filter(u => u.id !== user.id);
-              this.updateDisplayedUsers();
+              this.getUsers();
+              this.p = 1;  
             },
-            error: (err) => console.error('Failed to delete user', err)
+            error: (err) => {
+              console.error('Failed to delete user', err);
+            }
           });
         }
       },
-      error: (err) => console.error('Failed to fetch user', err)
+      error: (err) => {
+        console.error('Failed to fetch user', err);
+      }
     });
   }
+  
 
   goToForm(id: number) {
     if (id) {
