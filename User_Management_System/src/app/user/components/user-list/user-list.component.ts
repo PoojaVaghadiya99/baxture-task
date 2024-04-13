@@ -53,9 +53,27 @@ export class UserListComponent implements OnInit {
     this.displayedUsers = this.users.slice(start, end);
   }
 
-
   deleteUser(id: string) {
-    console.log('Deleting user:', id);
+    this.userService.getUserById(Number(id)).subscribe({
+      next: (user: UserDTO) => {
+        const confirmDelete = confirm(
+          `Are you sure you want to delete below user ?\n
+          First Name - ${user.first_name} ${user.last_name}
+          Email - ${user.email}`
+        );
+        if (confirmDelete) {
+          this.userService.deleteUser(Number(id)).subscribe({
+            next: (result) => {
+              console.log(result);
+              this.users = this.users.filter(u => u.id !== user.id);
+              this.updateDisplayedUsers();
+            },
+            error: (err) => console.error('Failed to delete user', err)
+          });
+        }
+      },
+      error: (err) => console.error('Failed to fetch user', err)
+    });
   }
 
   goToForm(id: number) {

@@ -29,11 +29,15 @@ export class UserUpsertComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       const userId = params.get('id');
       if (userId) {
-        this.isEdit = true;
-        this.currentUserId = userId;
-        this.userService.getUserById(Number(userId)).subscribe(user => {
-          this.editForm(user);
-        });
+        if (Number(userId) == 0) {
+          this.isEdit = false
+        } else {
+          this.isEdit = true;
+          this.currentUserId = userId;
+          this.userService.getUserById(Number(userId)).subscribe(user => {
+            this.editForm(user);
+          });
+        }
       }
     });
   }
