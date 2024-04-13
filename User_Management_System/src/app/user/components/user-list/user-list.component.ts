@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UserDTO } from '../../model/user.model'
 
 @Component({
   selector: 'app-user-list',
@@ -10,33 +11,37 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 export class UserListComponent implements OnInit {
 
-  users: any = [];
+  users: UserDTO[] = [];
   p: number = 1;
   itemsPerPage = 10;
   totalPages!: number;
   pages!: number[];
-  displayedUsers: any = []; 
+  displayedUsers: UserDTO[] = [];
 
   constructor(
     private userService: UserService,
     private _router: Router,
     protected _activatedRoute: ActivatedRoute,
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.userService.getUser().subscribe(data => {
-      this.users = data;
-      this.totalPages = Math.ceil(this.users.length / this.itemsPerPage);
-      this.pages = Array.from({length: this.totalPages}, (_, i) => i + 1);
-      this.updateDisplayedUsers();
-    }, error => {
-      console.error('There was an error!', error);
-    });
+    this.userService.getUser()
+      .subscribe({
+        next: (result: UserDTO[]) => {
+          this.users = result;
+          this.totalPages = Math.ceil(this.users.length / this.itemsPerPage);
+          this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+          this.updateDisplayedUsers();
+        },
+        error: (err: any) => {
+          console.error('There was an error!', err);
+        },
+      });
   }
 
   changePage(page: number) {
     if (page < 1 || page > this.totalPages) {
-      return; 
+      return;
     }
     this.p = page;
     this.updateDisplayedUsers();
@@ -48,11 +53,8 @@ export class UserListComponent implements OnInit {
     this.displayedUsers = this.users.slice(start, end);
   }
 
-  // editUser(id: number) {
-  //   console.log('Editing user:', id);
-  // }
 
-  deleteUser(id: number) {
+  deleteUser(id: string) {
     console.log('Deleting user:', id);
   }
 
@@ -64,8 +66,8 @@ export class UserListComponent implements OnInit {
     }
   }
 
-  editUser(id: number) {
-    this.goToForm(id);
+  editUser(id: string) {
+    this.goToForm(Number(id));
   }
 
   addUser() {

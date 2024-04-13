@@ -7,100 +7,40 @@
 
                 <!-- Personal Information Section -->
                 <div class="col-md-12">
-                    <label for="firstName" class="form-label">
+                    <label for="first_name" class="form-label">
                         <h6>First Name</h6>
                     </label>
-                    <input type="text" class="form-control" id="firstName" formControlName="firstName"
+                    <input type="text" class="form-control" id="first_name" formControlName="first_name"
                         placeholder="First Name">
-                    <div *ngIf="userForm.get('firstName')?.invalid && (userForm.get('firstName')?.touched || submitted)"
+                    <div *ngIf="userForm.get('first_name')?.invalid && (userForm.get('first_name')?.touched || submitted)"
                         class="text-danger">
-                        <div *ngIf="userForm.get('firstName')?.errors?.['required']">First name is required.</div>
+                        <div *ngIf="userForm.get('first_name')?.errors?.['required']">First name is required.</div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <label for="lastName" class="form-label">
+                    <label for="last_name" class="form-label">
                         <h6>Last Name</h6>
                     </label>
-                    <input type="text" class="form-control" id="lastName" formControlName="lastName"
+                    <input type="text" class="form-control" id="last_name" formControlName="last_name"
                         placeholder="Last Name">
-                    <div *ngIf="userForm.get('lastName')?.invalid && (userForm.get('lastName')?.touched || submitted)"
+                    <div *ngIf="userForm.get('last_name')?.invalid && (userForm.get('last_name')?.touched || submitted)"
                         class="text-danger">
-                        <div *ngIf="userForm.get('lastName')?.errors?.['required']">Last name is required.</div>
+                        <div *ngIf="userForm.get('last_name')?.errors?.['required']">Last name is required.</div>
                     </div>
                 </div>
 
                 <!-- Address Section -->
-                <!-- <div formGroupName="address" class="col-12">
-                    <label class="form-label">
+                <div class="col-md-12">
+                    <label for="address" class="form-label">
                         <h6>Address</h6>
                     </label>
-                    <div class="row g-2">
-                        <div class="col-md-6">
-                            <label for="street" class="form-label">Street</label>
-                            <input type="text" id="street" formControlName="street" class="form-control"
-                                placeholder="Street">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="city" class="form-label">City</label>
-                            <input type="text" id="city" formControlName="city" class="form-control" placeholder="City">
-                            <div *ngIf="userForm.get('city')?.invalid && (userForm.get('city')?.touched || submitted)"
-                                class="text-danger">
-                                <div *ngIf="userForm.get('city')?.errors?.['required']">City is required.</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="state" class="form-label">State</label>
-                            <input type="text" id="state" formControlName="state" class="form-control"
-                                placeholder="State">
-                            <div *ngIf="userForm.get('state')?.invalid && (userForm.get('state')?.touched || submitted)"
-                                class="text-danger">
-                                <div *ngIf="userForm.get('state')?.errors?.['required']">State is required.</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="zip" class="form-label">Zip Code</label>
-                            <input type="text" id="zip" formControlName="zip" class="form-control"
-                                placeholder="Zip Code">
-                        </div>
-                    </div>
-                </div> -->
-                <!-- Address Section -->
-                <div formGroupName="address" class="col-12">
-                    <label class="form-label">
-                        <h6>Address</h6>
-                    </label>
-                    <div class="row g-2">
-                        <div class="col-md-12">
-                            <label for="street" class="form-label">Street</label>
-                            <input type="text" id="street" formControlName="street" class="form-control"
-                                placeholder="Street">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="city" class="form-label">City</label>
-                            <input type="text" id="city" formControlName="city" class="form-control" placeholder="City">
-                            <div *ngIf="userForm.get('address.city')?.invalid && (userForm.get('address.city')?.touched || submitted)"
-                                class="text-danger">
-                                <div *ngIf="userForm.get('address.city')?.errors?.['required']">City is required.</div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="state" class="form-label">State</label>
-                            <input type="text" id="state" formControlName="state" class="form-control"
-                                placeholder="State">
-                            <div *ngIf="userForm.get('address.state')?.invalid && (userForm.get('address.state')?.touched || submitted)"
-                                class="text-danger">
-                                <div *ngIf="userForm.get('address.state')?.errors?.['required']">State is required.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="zip" class="form-label">Zip Code</label>
-                            <input type="text" id="zip" formControlName="zip" class="form-control"
-                                placeholder="Zip Code">
-                        </div>
+                    <input type="text" class="form-control" id="address" formControlName="address"
+                        placeholder="First Name">
+                    <div *ngIf="userForm.get('address')?.invalid && (userForm.get('address')?.touched || submitted)"
+                        class="text-danger">
+                        <div *ngIf="userForm.get('address')?.errors?.['required']">Address is required.</div>
                     </div>
                 </div>
-
 
                 <!-- Contact Information Section -->
                 <div class="col-md-12">
@@ -110,7 +50,7 @@
                     <input type="email" class="form-control" id="email" formControlName="email" placeholder="Email">
                     <div *ngIf="userForm.get('email')?.invalid && (userForm.get('email')?.touched || submitted)"
                         class="text-danger">
-                        <div *ngIf="userForm.get('email')?.errors?.['required']">Email is required.</div>                        
+                        <div *ngIf="userForm.get('email')?.errors?.['required']">Email is required.</div>
                         <div *ngIf="userForm.get('email')?.errors?.['email']">Please enter a valid email address.</div>
                     </div>
                 </div>
