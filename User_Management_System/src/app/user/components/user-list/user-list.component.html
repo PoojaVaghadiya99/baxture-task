@@ -1,12 +1,15 @@
+<!-- Loader -->
 <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
   <div class="spinner-border text-primary" role="status">
     <span class="sr-only"></span>
   </div>
 </div>
 
+<!-- Card -->
 <div *ngIf="!isLoading" class="container-fluid my-5">
   <div class="card shadow border-0 bg-white">
 
+    <!-- Header -->
     <div class="card-header bg-white border-0 pt-3">
       <h4>Users List
         <a routerLink="/user-form/0" class="btn btn-primary float-end">Add User</a>
@@ -14,6 +17,7 @@
     </div>
     <hr />
 
+    <!-- Table -->
     <div class="card-body">
       <div class="table-responsive">
         <table class="table custom-table">
@@ -48,6 +52,8 @@
           </tbody>
         </table>
       </div>
+
+      <!-- Pagination -->
       <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
           <li class="page-item" [class.disabled]="p === 1">
@@ -65,6 +71,7 @@
           </li>
         </ul>
       </nav>
+
     </div>
   </div>
 </div>

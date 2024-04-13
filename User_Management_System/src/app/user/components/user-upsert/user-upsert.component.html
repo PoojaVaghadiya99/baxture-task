@@ -1,19 +1,22 @@
+<!-- Loader -->
 <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="spinner-border text-primary" role="status">
         <span class="sr-only"></span>
     </div>
 </div>
 
-
+<!-- Card -->
 <div *ngIf="!isLoading" class="container my-5">
     <div class="card shadow border-0 bg-white">
 
+        <!-- Header -->
         <div class="card-header bg-white border-0">
             <h4>{{formTitle}}
                 <a routerLink="/user-list" class="btn btn-danger float-end">X</a>
             </h4>
         </div>
 
+        <!-- Form -->
         <div class="card-body">
             <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="row g-3">
 

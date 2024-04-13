@@ -27,6 +27,7 @@ export class UserListComponent implements OnInit {
     this.getUsers();
   }
 
+  // Get All Users Data
   getUsers() {
     this.isLoading = true;
     this.userService.getUser().subscribe({
@@ -43,6 +44,7 @@ export class UserListComponent implements OnInit {
     });
   }
 
+  // Change Page 
   changePage(page: number) {
     if (page < 1 || page > this.totalPages) {
       return;
@@ -51,6 +53,7 @@ export class UserListComponent implements OnInit {
     this.getUsers();
   }
 
+  // Delete User
   deleteUser(id: string) {
     this.userService.getUserById(Number(id)).subscribe({
       next: (user: UserDTO) => {
@@ -79,6 +82,7 @@ export class UserListComponent implements OnInit {
     });
   }
 
+  // Navigate to Form Page
   goToForm(id: number) {
     if (id) {
       this._router.navigate(['/user-form', id]);
@@ -87,10 +91,12 @@ export class UserListComponent implements OnInit {
     }
   }
 
+  // Edit User
   editUser(id: string) {
     this.goToForm(Number(id));
   }
 
+  // Add User
   addUser() {
     this.goToForm(0);
   }

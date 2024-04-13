@@ -22,7 +22,7 @@ export class UserUpsertComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -51,6 +51,7 @@ export class UserUpsertComponent implements OnInit {
     });
   }
 
+  // Create Form
   createForm() {
     this.userForm = this.fb.group({
       id: [null],
@@ -62,6 +63,7 @@ export class UserUpsertComponent implements OnInit {
     });
   }
 
+  // Edit Form
   editForm(data: UserDTO) {
     this.userForm.setValue({
       id: data.id,
@@ -73,6 +75,7 @@ export class UserUpsertComponent implements OnInit {
     });
   }
 
+  // On Submit
   onSubmit(): void {
     this.submitted = true;
     if (this.userForm.valid) {
@@ -124,6 +127,7 @@ export class UserUpsertComponent implements OnInit {
     }
   }
 
+  // Submit After Validate
   private processFormSubmission(): void {
     if (this.isEdit) {
       this.userService.updateUser(this.userForm.value as UserDTO).subscribe({
