@@ -24,7 +24,7 @@ To install the User Management System, follow these steps:
    git clone https://github.com/PoojaVaghadiya99/baxture-task
 
 2. Navigate to the project directory:
-   cd user-management-system
+   cd User_Management_System
 
 3. Install dependencies:
    npm install
